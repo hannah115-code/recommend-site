@@ -38,7 +38,7 @@ const picks = [
   '노래 백예린, Antifreeze',
   '책 〈오만과 편견〉 — 첫인상이 전부는 아니다',
   '도시 제주',
-  '앱 Google 지도'
+  '앱 구글 캘린더'
 ];
 
 if (button) {
