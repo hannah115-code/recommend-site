@@ -1,0 +1,307 @@
+/* [styles.css] 모든 페이지가 함께 쓰는 외부 CSS 파일 (강의 슬라이드 62)
+   12칸 그리드 위에 글과 이미지를 배치하는 에디토리얼 스타일 */
+
+:root {
+  --ink: #121212;      /* 본문 글자색 */
+  --muted: #8C8C8C;    /* 보조 글자색 */
+  --faint: #C9C9C9;    /* /01 같은 큰 번호 */
+  --line: #E4E4E4;     /* 얇은 구분선 */
+  --bg: #E9E9E9;       /* 바깥 배경 */
+  --paper: #FFFFFF;    /* 종이(페이지) 배경 */
+  --guide: rgba(198, 200, 224, 0.55);  /* 그리드 표시 색 */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", "Pretendard", -apple-system, "Malgun Gothic", sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+p { margin: 0 0 0.9em; }
+b { font-weight: 600; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
+.muted { color: var(--muted); }
+.link { border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
+.link:hover { color: var(--muted); border-color: var(--muted); }
+
+/* ---------- 페이지 틀과 12칸 그리드 ---------- */
+.frame {
+  position: relative;
+  max-width: 1280px;
+  margin: 40px auto;
+  background-color: var(--paper);
+  padding: 24px 32px 32px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 16px;
+}
+
+/* Show Grid 버튼을 누르면 보이는 세로 기둥 (script.js가 만들어 줌) */
+.overlay {
+  position: absolute;
+  inset: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 16px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  z-index: 5;
+}
+.overlay span { background-color: var(--guide); }
+body.show-grid .overlay { opacity: 1; }
+
+/* ---------- 상단 헤더 ---------- */
+.top { font-size: 12px; align-items: start; }
+.brand   { grid-column: 1 / 5; }
+.brand sup { font-size: 8px; }
+.issue   { grid-column: 7 / 9; }
+.nav     { grid-column: 9 / 12; display: grid; grid-template-columns: 1fr 1fr; }
+.nav a:hover { color: var(--muted); }
+.nav a.now::before { content: "→ "; }
+.tools   { grid-column: 12 / 13; text-align: right; }
+
+button.text-btn {
+  font: inherit;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  padding: 0 0 1px;
+  cursor: pointer;
+}
+button.text-btn:hover { color: var(--muted); border-color: var(--muted); }
+
+/* ---------- 제목 영역 (/01 + 큰 제목) ---------- */
+.hero { margin-top: 72px; align-items: end; }
+.hero .num {
+  grid-column: 1 / -1;
+  font-size: clamp(40px, 5.5vw, 68px);
+  font-weight: 300;
+  color: var(--faint);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.hero h1 {
+  grid-column: 1 / 7;
+  margin: 6px 0 0;
+  font-size: clamp(40px, 5.5vw, 72px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+.hero .meta  { font-size: 12px; padding-bottom: 8px; }
+.hero .m1    { grid-column: 7 / 9; }
+.hero .m2    { grid-column: 9 / 11; }
+.hero .more  { grid-column: 11 / 13; text-align: right; }
+
+/* 넓은 사진 */
+.wide {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  margin-top: 20px;
+}
+
+/* 소개 줄: 왼쪽 위치·시각, 오른쪽 짧은 소개글 */
+.intro { margin-top: 24px; align-items: end; }
+.place { grid-column: 1 / 4; font-size: 12px; }
+.lede  { grid-column: 7 / 12; font-size: 13px; }
+
+/* ---------- 추천 항목 ---------- */
+.item { margin-top: 96px; row-gap: 20px; }
+.item-label {
+  grid-column: 1 / 3;
+  font-size: 12px;
+  color: var(--muted);
+  padding-top: 12px;
+}
+.item h2 {
+  grid-column: 3 / 13;
+  margin: 0;
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.item h2 small { font-size: 0.45em; color: var(--muted); letter-spacing: 0; margin-left: 8px; }
+
+/* 영화: 포스터(3칸) + 예고편(9칸) */
+.media {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 16px;
+}
+.media .poster { grid-column: 1 / 4; width: 100%; height: 100%; object-fit: cover; }
+.media .video  { grid-column: 4 / 13; }
+
+.video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  display: block;
+  background-color: #F2F2F2;
+}
+
+/* 왼쪽·오른쪽 칸 나누기 */
+.left4  { grid-column: 1 / 5; }
+.left5  { grid-column: 1 / 6; }
+.left8  { grid-column: 1 / 9; }
+.right6 { grid-column: 7 / 13; }
+.right7 { grid-column: 6 / 13; }
+.right4 { grid-column: 9 / 13; }
+
+/* 정보 표 */
+table.facts { border-collapse: collapse; width: 100%; font-size: 12px; align-self: start; }
+.facts th, .facts td {
+  text-align: left;
+  font-weight: 400;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+  vertical-align: top;
+}
+.facts tr:last-child th, .facts tr:last-child td { border-bottom: 1px solid var(--line); }
+.facts th { color: var(--muted); width: 35%; }
+.facts a { border-bottom: 1px solid var(--ink); }
+
+/* 추천 이유 본문 */
+.body { font-size: 15px; line-height: 1.75; }
+.body h3, .small-title {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+.right4 .body, .right4 .facts { margin-bottom: 28px; }
+
+/* 번호 달린 큰 목록 */
+.big-list { list-style: none; padding: 0; margin: 0 0 40px; }
+.big-list li {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  font-size: clamp(18px, 1.7vw, 22px);
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+}
+.big-list li:last-child { border-bottom: 1px solid var(--line); }
+.big-list li span { font-size: 12px; color: var(--muted); padding-top: 5px; }
+.big-list li em { display: block; font-style: normal; font-size: 13px; color: var(--muted); letter-spacing: 0; margin-top: 4px; }
+
+/* 앱 아이콘 타일 */
+.tile {
+  aspect-ratio: 1 / 1;
+  background-color: #F3F3F3;
+  display: grid;
+  place-items: center;
+  margin-bottom: 20px;
+}
+.tile img { width: 32%; }
+
+.caption { font-size: 12px; color: var(--muted); margin-top: 8px; }
+.map { filter: grayscale(1); aspect-ratio: 21 / 9; }
+
+/* ---------- 홈: 자기소개 + 목차 ---------- */
+.about { margin-top: 96px; padding-top: 16px; border-top: 1px solid var(--line); }
+.statement {
+  grid-column: 1 / 7;
+  margin: 0;
+  font-size: clamp(24px, 2.6vw, 34px);
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+.about .body { grid-column: 7 / 12; }
+
+.index { margin-top: 96px; }
+.index-title { grid-column: 1 / -1; margin-bottom: 16px; }
+.row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 16px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+  align-items: center;
+}
+.row:last-child { border-bottom: 1px solid var(--line); }
+.row .n   { grid-column: 1 / 2; font-size: 12px; color: var(--muted); }
+.row .t   { grid-column: 2 / 4; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.025em; transition: padding 0.3s; }
+
+/* 제목 옆 작은 사진들 — 평소엔 흑백, 마우스를 올리면 컬러 */
+.row .th  { grid-column: 4 / 7; display: flex; gap: 6px; }
+.row .th img {
+  width: 60px;
+  height: 80px;
+  object-fit: cover;
+  filter: grayscale(1);
+  transition: filter 0.4s;
+}
+.row .th img.icon { object-fit: contain; padding: 14px; background-color: #F3F3F3; }
+.row:hover .th img { filter: grayscale(0); }
+@media (hover: none) { .row .th img { filter: none; } }  /* 터치 화면은 처음부터 컬러 */
+.row .k   { grid-column: 7 / 9; font-size: 12px; color: var(--muted); }
+.row .p   { grid-column: 9 / 12; font-size: 12px; }
+.row .arr { grid-column: 12 / 13; text-align: right; font-size: 18px; }
+.row:hover .t { padding-left: 12px; }
+
+.pick { margin-top: 96px; align-items: end; }
+.pick .small-title { grid-column: 1 / 4; margin: 0; }
+.pick p { grid-column: 4 / 10; margin: 0; font-size: clamp(20px, 2vw, 26px); letter-spacing: -0.02em; }
+.pick .btn-wrap { grid-column: 10 / 13; text-align: right; font-size: 12px; }
+
+/* ---------- 하단 ---------- */
+.foot { margin-top: 96px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; align-items: end; }
+.foot .place { grid-column: 1 / 4; }
+.foot .prev  { grid-column: 7 / 10; }
+.foot .next  { grid-column: 10 / 13; text-align: right; }
+
+/* ---------- 휴대폰 화면 (4칸 그리드) ---------- */
+@media (max-width: 760px) {
+  .frame { margin: 0; padding: 16px; }
+  .overlay { inset: 0 16px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .overlay span:nth-child(n+5) { display: none; }
+  .grid, .media, .row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .grid > *, .media > *, .row > * { grid-column: 1 / -1 !important; }
+
+  .brand { grid-column: 1 / 3 !important; }
+  .tools { grid-column: 3 / 5 !important; grid-row: 1; }
+  .issue { grid-column: 1 / 3 !important; margin-top: 16px; }
+  .nav   { grid-column: 3 / 5 !important; margin-top: 16px; grid-template-columns: 1fr; }
+
+  .hero { margin-top: 48px; row-gap: 12px; }
+  .hero .m1 { grid-column: 1 / 3 !important; }
+  .hero .m2 { grid-column: 3 / 5 !important; }
+  .hero .more { text-align: left; }
+  .wide { aspect-ratio: 4 / 3; }
+
+  .intro, .foot, .pick { row-gap: 16px; }
+  .item { margin-top: 64px; }
+  .item-label { padding-top: 0; }
+  .media { row-gap: 12px; }
+  .media .poster { grid-column: 1 / 3 !important; height: auto; aspect-ratio: 2 / 3; }
+
+  .row { row-gap: 4px; align-items: baseline; }
+  .row .n { grid-column: 1 / 2 !important; }
+  .row .t { grid-column: 2 / 5 !important; }
+  .row .p { grid-column: 2 / 5 !important; }
+  .row .th { grid-column: 2 / 5 !important; margin: 6px 0; }
+  .row .th img { width: 45px; height: 60px; }
+  .row .th img.icon { padding: 10px; }
+  .row .k, .row .arr { display: none; }
+
+  .about { row-gap: 24px; margin-top: 56px; }
+  .pick .btn-wrap, .foot .next { text-align: left; }
+  .map { aspect-ratio: 4 / 3; }
+}

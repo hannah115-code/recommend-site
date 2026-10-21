@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<HTML lang="ko">
+<HEAD>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <TITLE>Recommendation Notes — 이호연</TITLE>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="styles.css">
+</HEAD>
+
+<BODY>
+<div class="frame">
+
+  <!-- 상단 헤더 -->
+  <div class="grid top">
+    <div class="brand">Hoyeon's Notes<sup>®</sup></div>
+    <div class="issue"><span class="muted">Issue No. 1</span><BR>October 2026</div>
+    <div class="nav">
+      <A HREF="index.html" class="now">Home</A>
+      <A HREF="movies.html">Movies</A>
+      <A HREF="songs.html">Songs</A>
+      <A HREF="book.html">Book</A>
+      <A HREF="city.html">City</A>
+      <A HREF="app.html">App</A>
+    </div>
+    <div class="tools"><button class="text-btn" id="gridBtn">Show Grid</button></div>
+  </div>
+
+  <!-- 제목 -->
+  <div class="grid hero">
+    <div class="num">/00</div>
+    <H1>Recommendation Notes</H1>
+    <div class="meta m2"><span class="muted">Curated by</span><BR>이호연</div>
+    <div class="meta more"><A HREF="#list" class="link">Start Reading ↓</A></div>
+  </div>
+
+  <!-- 자기소개 -->
+  <div class="grid about">
+    <P class="statement">안녕하세요,<BR>이호연입니다.</P>
+    <div class="body">
+      <P>
+        현재 부동산개발회사에서 근무 중이고 양재 복합문화공간(스튜디오)을 운영하고 있어요.
+        학교에서는 <B>MBA 21기 학생회 OPERATION 위원회</B>로 활동하고 있습니다.
+        그리고 소개팅앱, 봉사활동 추천앱을 틈틈이 만들고 있어요.
+        앞으로는 <I>부동산 자산관리 및 투자</I> 분야로 커리어를 넓히고 싶습니다.
+      </P>
+      <P>쉴 때는 야구 보기, 테니스 배우기를 좋아해요.</P>
+      <P class="muted">제 취향을 담았습니다. 많이 구경해주세요!</P>
+    </div>
+  </div>
+
+  <!-- 추천 페이지 목차 -->
+  <div class="grid index" id="list">
+    <div class="index-title small-title">Contents — 추천 페이지 목록</div>
+    <A HREF="movies.html" class="row">
+      <span class="n">/01</span><span class="t">Movies</span>
+      <span class="th">
+        <IMG SRC="https://upload.wikimedia.org/wikipedia/en/1/11/Aftersun.jpg" ALT="애프터썬">
+        <IMG SRC="https://upload.wikimedia.org/wikipedia/en/0/03/Prideandprejudiceposter.jpg" ALT="오만과 편견">
+        <IMG SRC="https://upload.wikimedia.org/wikipedia/en/2/2f/Usandthem2018.jpg" ALT="먼 훗날 우리">
+      </span>
+      <span class="k">영화 3편</span><span class="p">애프터썬, 오만과 편견, 먼 훗날 우리</span><span class="arr">→</span>
+    </A>
+    <A HREF="songs.html" class="row">
+      <span class="n">/02</span><span class="t">Songs</span>
+      <span class="th">
+        <IMG SRC="https://img.youtube.com/vi/dvgZkm1xWPE/mqdefault.jpg" ALT="Viva La Vida">
+        <IMG SRC="https://img.youtube.com/vi/BzYnNdJhZQw/mqdefault.jpg" ALT="밤편지">
+      </span>
+      <span class="k">노래 2곡</span><span class="p">Viva La Vida, 밤편지</span><span class="arr">→</span>
+    </A>
+    <A HREF="book.html" class="row">
+      <span class="n">/03</span><span class="t">Book</span>
+      <span class="th">
+        <IMG SRC="https://upload.wikimedia.org/wikipedia/en/b/b9/Rich_Dad_Poor_Dad.jpg" ALT="부자 아빠 가난한 아빠">
+      </span>
+      <span class="k">책 1권</span><span class="p">부자 아빠 가난한 아빠</span><span class="arr">→</span>
+    </A>
+    <A HREF="city.html" class="row">
+      <span class="n">/04</span><span class="t">City</span>
+      <span class="th">
+        <IMG SRC="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Seongsan_Ilchulbong_from_the_air.jpg/1280px-Seongsan_Ilchulbong_from_the_air.jpg" ALT="제주 성산일출봉">
+      </span>
+      <span class="k">도시</span><span class="p">제주</span><span class="arr">→</span>
+    </A>
+    <A HREF="app.html" class="row">
+      <span class="n">/05</span><span class="t">App</span>
+      <span class="th">
+        <IMG SRC="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Google_Maps_icon_%282026%29.svg/250px-Google_Maps_icon_%282026%29.svg.png" ALT="Google 지도" class="icon">
+      </span>
+      <span class="k">모바일 앱</span><span class="p">Google 지도</span><span class="arr">→</span>
+    </A>
+  </div>
+
+  <!-- 오늘의 추천 뽑기 (JavaScript) -->
+  <div class="grid pick">
+    <div class="small-title">Can't decide?</div>
+    <P id="text">버튼을 누르면 오늘의 추천을 하나 골라 드려요.</P>
+    <div class="btn-wrap"><button class="text-btn" id="myBtn">오늘의 추천 뽑기 →</button></div>
+  </div>
+
+  <!-- 하단 -->
+  <div class="grid foot">
+    <div class="place">Seoul, Korea<BR><span class="clock"></span></div>
+    <div class="prev muted">© 2026 이호연</div>
+    <div class="next"><A HREF="movies.html" class="link">Next — Movies →</A></div>
+  </div>
+
+</div>
+
+<!-- JavaScript 파일 연결 -->
+<script src="script.js"></script>
+</BODY>
+</HTML>
