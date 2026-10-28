@@ -8,14 +8,7 @@
   --line: #E4E4E4;     /* 얇은 구분선 */
   --bg: #E9E9E9;       /* 바깥 배경 */
   --paper: #FFFFFF;    /* 종이(페이지) 배경 */
-  --accent: var(--muted);  /* 컬러 모드에서만 색이 들어오는 포인트 색 */
-}
-
-/* 컬러 모드 — Show Color 버튼을 누르면 세상에 색이 돌아옴 */
-body.color-on {
-  --bg: #EFE5D8;
-  --faint: #E8643C;
-  --accent: #E8643C;
+  --guide: rgba(198, 200, 224, 0.55);  /* 그리드 표시 색 */
 }
 
 * { box-sizing: border-box; }
@@ -53,52 +46,20 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
   column-gap: 16px;
 }
 
-/* ---------- 흑백 ↔ 컬러 ---------- */
-/* 기본은 흑백 세상: 사진·영상·지도 모두 회색 */
-img, iframe { filter: grayscale(1); transition: filter 1.2s ease; }
-body.color-on img, body.color-on iframe { filter: none; }
-body { transition: background-color 1.2s ease; }
-body.no-anim, body.no-anim * { transition: none !important; }
-
-/* 포인트 색이 들어가는 곳 */
-.item-label, .big-list li span, .row .n, .gallery figcaption span { transition: color 1.2s ease; }
-body.color-on .item-label,
-body.color-on .big-list li span,
-body.color-on .row .n,
-body.color-on .gallery figcaption span,
-body.color-on .nav a.now { color: var(--accent); }
-
-/* 화면 오른쪽 아래에 떠 있는 버튼 */
-.color-btn {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 20;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font: inherit;
-  font-size: 12px;
-  color: var(--ink);
-  background-color: var(--paper);
-  border: 1px solid var(--ink);
-  border-radius: 999px;
-  padding: 10px 16px;
-  cursor: pointer;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s;
+/* Show Grid 버튼을 누르면 보이는 세로 기둥 (script.js가 만들어 줌) */
+.overlay {
+  position: absolute;
+  inset: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 16px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  z-index: 5;
 }
-.color-btn:hover { transform: translateY(-2px); }
-.color-btn .dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: conic-gradient(#E8643C, #F2B134, #3AA675, #3B82F6, #9B5DE5, #E8643C);
-}
-
-/* 색이 원을 그리며 퍼지는 효과 (script.js의 View Transition과 함께 사용) */
-::view-transition-old(root),
-::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+.overlay span { background-color: var(--guide); }
+body.show-grid .overlay { opacity: 1; }
 
 /* ---------- 상단 헤더 ---------- */
 .top { font-size: 12px; align-items: start; }
@@ -259,7 +220,7 @@ table.facts { border-collapse: collapse; width: 100%; font-size: 12px; align-sel
 .tile img { width: 32%; }
 
 .caption { font-size: 12px; color: var(--muted); margin-top: 8px; }
-.map { aspect-ratio: 21 / 9; }
+.map { filter: grayscale(1); aspect-ratio: 21 / 9; }
 
 /* ---------- 홈: 자기소개 + 목차 ---------- */
 .about { margin-top: 96px; padding-top: 16px; border-top: 1px solid var(--line); }
@@ -287,15 +248,18 @@ table.facts { border-collapse: collapse; width: 100%; font-size: 12px; align-sel
 .row .n   { grid-column: 1 / 2; font-size: 12px; color: var(--muted); }
 .row .t   { grid-column: 2 / 4; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.025em; transition: padding 0.3s; }
 
-/* 제목 옆 작은 사진들 — 흑백일 때도 마우스를 올리면 살짝 컬러 */
+/* 제목 옆 작은 사진들 — 평소엔 흑백, 마우스를 올리면 컬러 */
 .row .th  { grid-column: 4 / 7; display: flex; gap: 6px; }
 .row .th img {
   width: 60px;
   height: 80px;
   object-fit: cover;
+  filter: grayscale(1);
+  transition: filter 0.4s;
 }
 .row .th img.icon { object-fit: contain; padding: 14px; background-color: #F3F3F3; }
-.row:hover .th img { filter: none; transition-duration: 0.4s; }
+.row:hover .th img { filter: grayscale(0); }
+@media (hover: none) { .row .th img { filter: none; } }  /* 터치 화면은 처음부터 컬러 */
 .row .k   { grid-column: 7 / 9; font-size: 12px; color: var(--muted); }
 .row .p   { grid-column: 9 / 12; font-size: 12px; }
 .row .arr { grid-column: 12 / 13; text-align: right; font-size: 18px; }
@@ -315,7 +279,8 @@ table.facts { border-collapse: collapse; width: 100%; font-size: 12px; align-sel
 /* ---------- 휴대폰 화면 (4칸 그리드) ---------- */
 @media (max-width: 760px) {
   .frame { margin: 0; padding: 16px; }
-  .color-btn { right: 16px; bottom: 16px; }
+  .overlay { inset: 0 16px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .overlay span:nth-child(n+5) { display: none; }
   .grid, .media, .row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .grid > *, .media > *, .row > * { grid-column: 1 / -1 !important; }
 
