@@ -220,7 +220,7 @@ table.facts { border-collapse: collapse; width: 100%; font-size: 12px; align-sel
 .tile img { width: 32%; }
 
 .caption { font-size: 12px; color: var(--muted); margin-top: 8px; }
-.map { filter: grayscale(1); aspect-ratio: 21 / 9; }
+.map { aspect-ratio: 21 / 9; }
 
 /* ---------- 홈: 자기소개 + 목차 ---------- */
 .about { margin-top: 96px; padding-top: 16px; border-top: 1px solid var(--line); }
@@ -247,18 +247,14 @@ table.facts { border-collapse: collapse; width: 100%; font-size: 12px; align-sel
 .row:last-child { border-bottom: 1px solid var(--line); }
 .row .n   { grid-column: 1 / 2; font-size: 12px; color: var(--muted); }
 .row .t   { grid-column: 2 / 4; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.025em; transition: padding 0.3s; }
-
-/* 제목 옆 작은 사진들 — 평소엔 흑백, 마우스를 올리면 컬러 */
+/* 제목 옆 작은 사진들 */
 .row .th  { grid-column: 4 / 7; display: flex; gap: 6px; }
 .row .th img {
   width: 60px;
   height: 80px;
   object-fit: cover;
-  filter: grayscale(1);
-  transition: filter 0.4s;
 }
 .row .th img.icon { object-fit: contain; padding: 14px; background-color: #F3F3F3; }
-.row:hover .th img { filter: grayscale(0); }
 @media (hover: none) { .row .th img { filter: none; } }  /* 터치 화면은 처음부터 컬러 */
 .row .k   { grid-column: 7 / 9; font-size: 12px; color: var(--muted); }
 .row .p   { grid-column: 9 / 12; font-size: 12px; }
